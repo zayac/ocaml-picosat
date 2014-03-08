@@ -1,0 +1,12 @@
+# OASIS_START
+# DO NOT EDIT (digest: a59a9eacc38b1c7a0ebed41b9aaafdfc)
+version = "0.1"
+description = "bindings to the picosat library"
+requires = "ctypes ctypes.foreign threads"
+archive(byte) = "picosat.cma"
+archive(byte, plugin) = "picosat.cma"
+archive(native) = "picosat.cmxa"
+archive(native, plugin) = "picosat.cmxs"
+exists_if = "picosat.cma"
+# OASIS_STOP
+

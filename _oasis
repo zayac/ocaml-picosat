@@ -1,0 +1,22 @@
+OASISFormat: 0.4
+Name:        picosat
+Version:     0.1
+Synopsis:    bindings to the picosat library
+Authors:     Pavel Zaichenkov
+License:     MIT
+Plugins:     META (0.4)
+
+Library picosat
+  Path:         lib
+  BuildDepends: ctypes, ctypes.foreign, threads
+  BuildTools:   ocamlbuild
+  Modules:      Picosat
+  CCLib:        -lpicosat
+  DllLib:       -lpicosat
+
+Executable test_solver
+  Path:           lib_test
+  MainIs:         test_solver.ml
+  BuildDepends:   picosat
+  CompiledObject: best
+  BuildTools:     ocamlbuild

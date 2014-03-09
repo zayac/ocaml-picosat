@@ -34,9 +34,6 @@ let set_prefix =
 let set_verbosity =
   foreign "picosat_set_verbosity" (picosat @-> int @-> returning void)
 
-let set_plain =
-  foreign "picosat_set_plain" (picosat @-> int @-> returning void)
-
 let set_global_default_phase =
   foreign "picosat_set_global_default_phase"
     (picosat @-> int @-> returning void)

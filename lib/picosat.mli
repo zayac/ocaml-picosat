@@ -9,7 +9,6 @@ val reset : picosat -> unit
 val measure_all_calls : picosat -> unit
 val set_prefix : picosat -> string -> unit
 val set_verbosity : picosat -> int -> unit
-val set_plain : picosat -> int -> unit
 val set_global_default_phase : picosat -> int -> unit
 val set_default_phase_lit : picosat -> int -> int -> unit
 val reset_phases : picosat -> unit

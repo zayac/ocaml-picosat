@@ -1,5 +1,5 @@
 (* OASIS_START *)
-(* DO NOT EDIT (digest: 78635a5c6530ff16d4c3ff58cc960552) *)
+(* DO NOT EDIT (digest: cedda0f9ec7845948157f3941efd18b2) *)
 module OASISGettext = struct
 (* # 22 "src/oasis/OASISGettext.ml" *)
 
@@ -585,9 +585,29 @@ let package_default =
      flags =
        [
           (["oasis_library_picosat_cclib"; "link"],
-            [(OASISExpr.EBool true, S [A "-cclib"; A "-lpicosat"])]);
+            [
+               (OASISExpr.EBool true, S []);
+               (OASISExpr.ETest ("system", "linux"),
+                 S
+                   [
+                      A "-cclib";
+                      A "-Xlinker";
+                      A "-cclib";
+                      A "--no-as-needed";
+                      A "-cclib";
+                      A "-lpicosat"
+                   ]);
+               (OASISExpr.ENot (OASISExpr.ETest ("system", "linux")),
+                 S [A "-cclib"; A "-lpicosat"])
+            ]);
           (["oasis_library_picosat_cclib"; "ocamlmklib"; "c"],
-            [(OASISExpr.EBool true, S [A "-lpicosat"])]);
+            [
+               (OASISExpr.EBool true, S []);
+               (OASISExpr.ETest ("system", "linux"),
+                 S [A "-Xlinker"; A "--no-as-needed"; A "-lpicosat"]);
+               (OASISExpr.ENot (OASISExpr.ETest ("system", "linux")),
+                 S [A "-lpicosat"])
+            ]);
           (["oasis_library_picosat_dlllib"; "link"; "byte"],
             [(OASISExpr.EBool true, S [A "-dllib"; P "-lpicosat"])])
        ];
@@ -597,6 +617,6 @@ let package_default =
 
 let dispatch_default = MyOCamlbuildBase.dispatch_default package_default;;
 
-# 601 "myocamlbuild.ml"
+# 621 "myocamlbuild.ml"
 (* OASIS_STOP *)
 Ocamlbuild_plugin.dispatch dispatch_default;;

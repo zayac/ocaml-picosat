@@ -146,9 +146,10 @@ let res' =
 
 let res psat =
   match res' psat with
-  | 10 -> Satisfiable
-  | 20 -> Unsatisfiable
-  | _ -> Unknown
+  | 0 -> None
+  | 10 -> Some Satisfiable
+  | 20 -> Some Unsatisfiable
+  | _ -> Some Unknown
 
 let deref' =
   foreign "picosat_deref" (picosat @-> int @-> returning int)

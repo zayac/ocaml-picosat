@@ -1,4 +1,4 @@
-OASISFormat:       1.4
+OASISFormat:      0.4
 OCamlVersion:     >= 4.00.1
 FindlibVersion:   >= 1.3.2
 Name:             picosat
@@ -13,7 +13,7 @@ XStdFilesAUTHORS: false
 XStdFilesREADME:  false
 BuildTools:       ocamlbuild
 Description:
-  The package provides OCaml bindings to the industrial-strength PicoSat SAT
+  The package provides OCaml bindings to the industrial-strength PicoSAT SAT
   solver.
 
 Library picosat
@@ -23,9 +23,17 @@ Library picosat
   Modules:      Picosat
   DllLib:       -lpicosat
   if system(linux)
-    CCLib: 	-Xlinker --no-as-needed -lpicosat
+    CCLib:      -Xlinker --no-as-needed -lpicosat
   else
-    CCLib: 	-lpicosat
+    CCLib:      -lpicosat
+
+Document "api"
+  Title:              OCaml API for PicoSAT
+  InstallDir:         $htmldir/api
+  Type:               ocamlbuild (0.3)
+  BuildTools:         ocamlbuild, ocamldoc
+  XOCamlbuildPath:    lib
+  XOcamlbuildModules: Picosat
 
 Executable test_solver
   Path:           lib_test

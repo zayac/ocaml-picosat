@@ -220,25 +220,25 @@ val res : picosat -> t option
 
 (** After [sat] was called and returned [Satisfiable], then
     the satisfying assignment can be obtained by 'dereferencing' literals.
-    The return value is [None] for an unknown value. *)
-val deref : picosat -> int -> bool option
+    The return value is 0 for an unknown value. *)
+val deref : picosat -> int -> int
 
 (** Same as before but just returns true resp. false if the literals is
     forced to this assignment at the top level.  This function does not
     require that [sat] was called and also does not internally reset
     incremental usage. *)
-val deref_toplevel : picosat -> int -> bool option
+val deref_toplevel : picosat -> int -> int
 
 (** After [sat] was called and returned [Satisfiable] a
     partial satisfying assignment can be obtained as well.  It satisfies all
-    original clauses.  The value of the literal is return as [Some true] for 'true',
-    [Some false] for 'false' and [None] for an unknown value.  In order to make this
-    work all original clauses have to be saved internally, which has to be
-    enabled by 'picosat_save_original_clauses' right after initialization. *)
-val deref_partial : picosat -> int -> bool option
+    original clauses.  The value of the literal is return as 1 for 'true', -1
+    for 'false' and 0 for an unknown value.  In order to make this work all
+    original clauses have to be saved internally, which has to be enabled by
+    'picosat_save_original_clauses' right after initialization. *)
+val deref_partial : picosat -> int -> int
 
-(** Returns non zero if the CNF is unsatisfiable because an empty clause was
- * added or derived. *)
+(** Returns true if the CNF is unsatisfiable because an empty clause was
+    added or derived. *)
 val inconsistent : picosat -> bool
 
 (** Returns non zero if the literal is a failed assumption, which is defined

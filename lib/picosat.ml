@@ -151,39 +151,21 @@ let res psat =
   | 20 -> Some Unsatisfiable
   | _ -> Some Unknown
 
-let deref' =
+let deref =
   foreign "picosat_deref" (picosat @-> int @-> returning int)
 
-let deref psat lit =
-  match deref' psat lit with
-  | 1 -> Some true
-  | -1 -> Some false
-  | _ -> None
-
-let deref_toplevel' =
+let deref_toplevel =
   foreign "picosat_deref_toplevel" (picosat @-> int @-> returning int)
 
-let deref_toplevel psat lit =
-  match deref_toplevel' psat lit with
-  | 1 -> Some true
-  | -1 -> Some false
-  | _ -> None
-
-let deref_partial' =
+let deref_partial =
   foreign "picosat_deref_partial" (picosat @-> int @-> returning int)
-
-let deref_partial psat lit =
-  match deref_partial' psat lit with
-  | 1 -> Some true
-  | -1 -> Some false
-  | _ -> None
 
 let inconsistent' =
   foreign "picosat_inconsistent" (picosat @-> returning int)
 
 let inconsistent psat =
-  if inconsistent' psat = 0 then true
-  else false
+  if inconsistent' psat = 0 then false
+  else true
 
 let failed_assumption' =
   foreign "picosat_failed_assumption" (picosat @-> int @-> returning int)

@@ -8,7 +8,7 @@ Authors:          Pavel Zaichenkov <zaichenkov@gmail.com>
 License:          MIT
 LicenseFile:      LICENSE.txt
 Homepage:         https://github.com/zayac/ocaml-picosat
-Plugins:          META (0.4), StdFiles (0.4)
+Plugins:          META (0.4), StdFiles (0.4), DevFiles (0.4)
 XStdFilesAUTHORS: false
 XStdFilesREADME:  false
 BuildTools:       ocamlbuild
@@ -16,11 +16,11 @@ Description:
   The package provides OCaml bindings to the industrial-strength PicoSAT SAT
   solver.
 
-Library picosat
+Library picologic
   Path:         lib
   BuildDepends: ctypes, ctypes.foreign, threads
   BuildTools:   ocamlbuild
-  Modules:      Picosat
+  Modules:      Picosat, Logic
   DllLib:       -lpicosat
   if system(linux)
     CCLib:      -Xlinker --no-as-needed -lpicosat
@@ -38,6 +38,7 @@ Document "api"
 Executable test_solver
   Path:           lib_test
   MainIs:         test_solver.ml
-  BuildDepends:   picosat
+  BuildDepends:   picologic
   CompiledObject: best
   BuildTools:     ocamlbuild
+  Install:        false

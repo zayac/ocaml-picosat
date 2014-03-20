@@ -1,5 +1,5 @@
 (* OASIS_START *)
-(* DO NOT EDIT (digest: 516e9b256926a41321adbc9035f8ecab) *)
+(* DO NOT EDIT (digest: f999af45bb789fa93c18b62ebd6d1060) *)
 This is the INSTALL file for the picosat distribution.
 
 This package uses OASIS to generate its build system. See section OASIS for
@@ -11,7 +11,7 @@ Dependencies
 In order to compile this package, you will need:
 * ocaml (>= 4.00.1) for all, doc api
 * findlib (>= 1.3.2)
-* ctypes for library picosat
+* ctypes for library picologic
 
 Installing
 ==========

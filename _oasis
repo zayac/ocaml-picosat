@@ -33,7 +33,7 @@ Document "api"
   Type:               ocamlbuild (0.3)
   BuildTools:         ocamlbuild, ocamldoc
   XOCamlbuildPath:    lib
-  XOcamlbuildModules: Picosat
+  XOcamlbuildModules: Picosat, Logic
 
 Executable test_solver
   Path:           lib_test

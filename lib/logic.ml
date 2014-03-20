@@ -52,7 +52,9 @@ let rec simplify = function
     end
   | t -> t
 
-let rec to_cnf = function
+let rec to_cnf t =
+  let t = simplify t in
+  match t with
   | And (p, q) -> (to_cnf p) @ (to_cnf q)
   | Or (p, q) ->
     let cnf, cnf' = to_cnf p, to_cnf q in
@@ -110,7 +112,7 @@ let index_variables lst =
   let imap, smap, _ = List.fold_left index (IM.empty, SM.empty, 1) lst in
   imap, smap
 
-let find_models t_lst =
+let find_models t_lst single_model =
   let imap, smap = index_variables t_lst in
   let psat = cnf_to_psat (lst_to_cnf t_lst) smap in
   let result = ref [] in
@@ -131,10 +133,20 @@ let find_models t_lst =
               !assignment
         ) x;
         ignore (Picosat.add !psat 0);
-        result :=  !assignment :: !result
+        result :=  !assignment :: !result;
+        if single_model then loop := false
       | None -> loop := false
     else
       loop := false
   done;
   !result
 
+let all_solutions t_lst =
+  match find_models t_lst false with
+  | [] -> None
+  | lst -> Some (List.map SM.bindings lst)
+
+let solve t_lst =
+  match find_models t_lst true with
+  | [] -> None
+  | hd :: _ -> Some (SM.bindings hd)

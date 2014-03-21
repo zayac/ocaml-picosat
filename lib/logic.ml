@@ -22,7 +22,9 @@ let (==>) t t' = ~-t + t'
 let (<==) t t' = t + -t'
 let (<=>) t t' = (t ==> t') * (t' ==> t)
 
+(* Map with String as a key. Used only inside the module. *)
 module SM = Map.Make(String)
+(* Map with Int as a key. Used only inside the module. *)
 module IM = Map.Make(struct type t = int let compare = compare end)
 
 let rec simplify = function
@@ -53,12 +55,14 @@ let rec simplify = function
   | t -> t
 
 let rec to_cnf t =
+  (* explicit formula simplification *)
   let t = simplify t in
   match t with
   | And (p, q) -> (to_cnf p) @ (to_cnf q)
   | Or (p, q) ->
     let cnf, cnf' = to_cnf p, to_cnf q in
     let module L = List in
+    (* cartesian product of left and right terms *)
     L.fold_left
       (fun acc x ->
         L.fold_left (fun acc x' ->
@@ -70,6 +74,7 @@ let rec to_cnf t =
   | Not (Or (p, q)) -> (to_cnf ~-p) @ (to_cnf ~-q)
   | x -> [[x]]
 
+(* add constraints provided in the CNF form to PicoSat *)
 let cnf_to_psat cnf smap =
   let module L = List in
   let module P = Picosat in
@@ -85,7 +90,8 @@ let cnf_to_psat cnf smap =
   ) cnf;
   psat
 
-
+(* get a model from the solver.
+   NOTE: [solve] function must be called before. *)
 let get_solution psat =
   let values = ref [] in
   let max_idx = Picosat.variables !psat in
@@ -96,8 +102,10 @@ let get_solution psat =
   else Some (List.rev !values)
 
 let lst_to_cnf lst =
-  List.fold_left (fun acc x -> (simplify x |> to_cnf) @ acc) [] lst
+  List.fold_left (fun acc x -> (to_cnf x) @ acc) [] lst
 
+(* associate variables with successive integer terms and return two associative
+   lists *)
 let index_variables lst =
   let module Perv = Pervasives in
   let rec index ((imap, smap, counter) as acc) x =
@@ -126,11 +134,13 @@ let find_models t_lst single_model =
         let counter = ref 1 in
         List.iter (fun v ->
           ignore (Picosat.add !psat Perv.(~-1 * !counter * v));
+          (* add a variable value to the assignment *)
           assignment :=
             SM.add
               (IM.find !counter imap)
-              (if v > 0 then True else False)
-              !assignment
+              (if v > 0 then true else false)
+              !assignment;
+          counter := Perv.(!counter + 1)
         ) x;
         ignore (Picosat.add !psat 0);
         result :=  !assignment :: !result;

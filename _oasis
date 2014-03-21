@@ -42,3 +42,11 @@ Executable test_solver
   CompiledObject: best
   BuildTools:     ocamlbuild
   Install:        false
+
+Executable test_logic
+  Path:           lib_test
+  MainIs:        test_logic.ml
+  BuildDepends:   picologic
+  CompiledObject: best
+  BuildTools:     ocamlbuild
+  Install:        false

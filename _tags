@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: 2bce51d8359fbd3974663bc781a834e2)
+# DO NOT EDIT (digest: 896c575cab44f7d624575b77c195ccd9)
 # Ignore VCS directories, you can use the same kind of rule outside
 # OASIS_START/STOP if you want to exclude directories that contains
 # useless stuff for the build process
@@ -25,6 +25,11 @@
 <lib_test/test_solver.{native,byte}>: package(ctypes.foreign)
 <lib_test/test_solver.{native,byte}>: package(threads)
 <lib_test/test_solver.{native,byte}>: use_picologic
+# Executable test_logic
+<lib_test/test_logic.{native,byte}>: package(ctypes)
+<lib_test/test_logic.{native,byte}>: package(ctypes.foreign)
+<lib_test/test_logic.{native,byte}>: package(threads)
+<lib_test/test_logic.{native,byte}>: use_picologic
 <lib_test/*.ml{,i}>: package(ctypes)
 <lib_test/*.ml{,i}>: package(ctypes.foreign)
 <lib_test/*.ml{,i}>: package(threads)

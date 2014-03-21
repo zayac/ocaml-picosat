@@ -1,6 +1,6 @@
 (** A wrapper over PicoSAT to ease solution of a SAT problem.  Boolean formulas
-    can be provided in an arbitrary form (not only CNF).  The solver can find
-    all models instead of a single one. *)
+    can be provided in an arbitrary form (not CNF).  The solver can find all
+    models instead of a single one. *)
 
 (** Basic representation of a boolean formula. *)
 type t =
@@ -27,12 +27,12 @@ val to_cnf : t -> t list list
     i.e. a solution is a list of variable-value pairs, otherwise the result is
     [None].
     *)
-val all_solutions : t list -> (string * t) list list option
+val all_solutions : t list -> (string * bool) list list option
 
 (** Find only a single (any) assignment for all variables.  In case of
     satisfiability, the result is a list of variable-value pairs, otherwise the
     result is [None]. *)
-val solve : t list -> (string * t) list option
+val solve : t list -> (string * bool) list option
 
 (** {2 Logical operators } *)
 

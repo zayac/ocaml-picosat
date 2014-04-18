@@ -1,11 +1,11 @@
 
 type t =
-  | True
   | False
-  | Var of string
+  | True
   | Not of t
   | Or of t * t
   | And of t * t
+  | Var of string
 
 let rec to_string = function
   | False -> "false"
@@ -19,13 +19,13 @@ let (+) t t' = Or (t, t')
 let ( * ) t t' = And (t, t')
 let (~-) t = Not t
 let (==>) t t' = ~-t + t'
-let (<==) t t' = t + -t'
+let (<==) t t' = t + ~-t'
 let (<=>) t t' = (t ==> t') * (t' ==> t)
 
 (* Map with String as a key. Used only inside the module. *)
 module SM = Map.Make(String)
 (* Map with Int as a key. Used only inside the module. *)
-module IM = Map.Make(struct type t = int let compare = compare end)
+module IM = Map.Make(struct type t = int let compare = Pervasives.compare end)
 
 let rec simplify = function
   | Not t ->

@@ -4,12 +4,12 @@
 
 (** Basic representation of a boolean formula. *)
 type t =
-  | True
   | False
-  | Var of string
+  | True
   | Not of t
   | Or of t * t
   | And of t * t
+  | Var of string
 
 (** Boolean formula string representation. *)
 val to_string : t -> string
